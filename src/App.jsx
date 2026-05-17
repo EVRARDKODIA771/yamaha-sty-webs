@@ -1,122 +1,134 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const demoStyles = [
+  "Afro Gospel 01", "Makossa Live", "Slow Rock", "Zouk Love", "Congolese Rumba",
+  "Worship Ballad", "Highlife", "Reggae Praise", "Bikutsi", "Ndombolo",
+  "Pop Ballad", "Jazz Swing", "Country 8Beat", "Bossa Nova", "Salsa",
+  "Dancehall", "Funk Groove", "Soul Worship", "March", "Disco Pop"
+];
+
+export default function App() {
+  const [page, setPage] = useState("home");
+  const [selected, setSelected] = useState(demoStyles[0]);
+  const [start, setStart] = useState(0);
+  const visible = demoStyles.slice(start, start + 10);
+
+  const next = () => {
+    if (start + 10 < demoStyles.length) setStart(start + 10);
+  };
+
+  const prev = () => {
+    if (start - 10 >= 0) setStart(start - 10);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <div className="app">
+      <header className="topbar">
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+          <h1>Yamaha STY Web Player</h1>
+          <p>Lecteur web de styles Yamaha</p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        <button className="loginBtn">Utilisateur connecté</button>
+      </header>
 
-      <div className="ticks"></div>
+      {page === "home" && (
+        <main className="home">
+          <button onClick={() => setPage("upload")}>Ajouter des styles</button>
+          <button onClick={() => setPage("player")}>Lire des styles</button>
+          <button onClick={() => setPage("manage")}>Modifier / Supprimer</button>
+        </main>
+      )}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {page === "upload" && (
+        <main className="panel">
+          <button className="back" onClick={() => setPage("home")}>← Retour</button>
+          <h2>Ajouter des styles</h2>
+          <p>Importe ici tes fichiers Yamaha .sty</p>
+          <input type="file" accept=".sty" multiple />
+          <div className="hint">Les fichiers seront ensuite stockés dans Supabase Storage.</div>
+        </main>
+      )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {page === "manage" && (
+        <main className="panel">
+          <button className="back" onClick={() => setPage("home")}>← Retour</button>
+          <h2>Modifier ou supprimer mes styles</h2>
+          {demoStyles.slice(0, 5).map((style) => (
+            <div className="manageRow" key={style}>
+              <span>{style}</span>
+              <button>Renommer</button>
+              <button className="danger">Supprimer</button>
+            </div>
+          ))}
+        </main>
+      )}
+
+      {page === "player" && (
+        <main className="workstation">
+          <button className="back" onClick={() => setPage("home")}>← Retour</button>
+
+          <section className="screen">
+            <div className="screenHeader">
+              <span>STYLE SELECT</span>
+              <strong>{selected}</strong>
+            </div>
+
+            <div className="styleGrid">
+              {visible.map((style) => (
+                <button
+                  key={style}
+                  className={selected === style ? "style active" : "style"}
+                  onClick={() => setSelected(style)}
+                >
+                  {style}
+                </button>
+              ))}
+            </div>
+
+            <div className="screenFooter">
+              <button onClick={prev}>Précédent</button>
+              <span>{start + 1} - {Math.min(start + 10, demoStyles.length)} / {demoStyles.length}</span>
+              <button onClick={next}>Suivant</button>
+            </div>
+          </section>
+
+          <section className="controls">
+            <div className="controlGroup">
+              <button className="play">PLAY</button>
+              <button>PAUSE</button>
+              <button>STOP</button>
+              <button>BREAK</button>
+            </div>
+
+            <div className="controlGroup">
+              <button>INTRO A</button>
+              <button>INTRO B</button>
+              <button>INTRO C</button>
+            </div>
+
+            <div className="controlGroup mainControls">
+              <button>MAIN A</button>
+              <button>MAIN B</button>
+              <button>MAIN C</button>
+              <button>MAIN D</button>
+            </div>
+
+            <div className="controlGroup">
+              <button>FILL A</button>
+              <button>FILL B</button>
+              <button>FILL C</button>
+              <button>FILL D</button>
+            </div>
+
+            <div className="controlGroup">
+              <button>ENDING A</button>
+              <button>ENDING B</button>
+              <button>ENDING C</button>
+            </div>
+          </section>
+        </main>
+      )}
+    </div>
+  );
 }
-
-export default App
