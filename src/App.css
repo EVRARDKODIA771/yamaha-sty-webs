@@ -6,7 +6,9 @@ html,
 body,
 #root {
   margin: 0;
+  width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -21,9 +23,11 @@ button {
 }
 
 .app {
+  width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
   background:
-    radial-gradient(circle at top, #252b35 0%, #080a0e 42%, #000 100%);
+    radial-gradient(circle at center top, #252b35 0%, #080a0e 42%, #000 100%);
   color: white;
 }
 
@@ -40,6 +44,7 @@ button {
 
 .homeCenter {
   width: min(520px, 100%);
+  max-width: 520px;
   padding: 34px 28px;
   border-radius: 34px;
   background: rgba(10, 13, 18, 0.86);
@@ -108,8 +113,8 @@ button {
 }
 
 .videoIntro video {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
