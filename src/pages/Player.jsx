@@ -19,12 +19,21 @@ const rightStyles = [
 
 export default function Player() {
   const [selectedStyle, setSelectedStyle] = useState("Makossa Live");
-  const [activeMain, setActiveMain] = useState("A");
-  const [transport, setTransport] = useState("play");
+  const [activeButton, setActiveButton] = useState("MAIN A");
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const goHome = () => {
     window.history.pushState({}, "", "/");
     window.dispatchEvent(new PopStateEvent("popstate"));
+  };
+
+  const pressButton = (buttonName) => {
+    setActiveButton(buttonName);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+    setActiveButton(isPlaying ? "PAUSE" : "PLAY");
   };
 
   return (
@@ -48,7 +57,7 @@ export default function Player() {
               <strong>{selectedStyle}</strong>
             </div>
 
-            <div className="screenBody">
+            <div className="screenBody screenBodyTwoCols">
               <div className="styleColumn">
                 {leftStyles.map((style) => (
                   <button
@@ -63,63 +72,6 @@ export default function Player() {
                     {style}
                   </button>
                 ))}
-              </div>
-
-              <div className="centerTransport">
-                <div className="tempoBox">
-                  <strong>{selectedStyle}</strong>
-                  <span>001</span>
-                  <small>4/4 • ♩ = 92</small>
-                </div>
-
-                <div className="transportGrid">
-                  <button
-                    className="hwBtn small"
-                    onClick={() => setTransport("previous")}
-                  >
-                    ◀◀
-                  </button>
-
-                  <button
-                    className={
-                      transport === "play"
-                        ? "hwBtn playHw activeLed"
-                        : "hwBtn playHw"
-                    }
-                    onClick={() => setTransport("play")}
-                  >
-                    ▶
-                  </button>
-
-                  <button
-                    className="hwBtn small"
-                    onClick={() => setTransport("next")}
-                  >
-                    ▶▶
-                  </button>
-
-                  <button
-                    className={
-                      transport === "pause"
-                        ? "hwBtn activeLed"
-                        : "hwBtn"
-                    }
-                    onClick={() => setTransport("pause")}
-                  >
-                    ❚❚
-                  </button>
-
-                  <button
-                    className={
-                      transport === "stop"
-                        ? "hwBtn activeLed"
-                        : "hwBtn"
-                    }
-                    onClick={() => setTransport("stop")}
-                  >
-                    ■
-                  </button>
-                </div>
               </div>
 
               <div className="styleColumn">
@@ -141,12 +93,22 @@ export default function Player() {
           </div>
         </section>
 
-        <section className="styleControlPanel">
+        <section className="styleControlPanel fullStyleControl">
           <div className="controlCluster">
             <span className="clusterLabel">INTRO</span>
-            <button className="sectionBtn">I</button>
-            <button className="sectionBtn">II</button>
-            <button className="sectionBtn">III</button>
+            {["I", "II", "III", "IV"].map((intro) => (
+              <button
+                key={intro}
+                className={
+                  activeButton === `INTRO ${intro}`
+                    ? "sectionBtn activeBlueLed"
+                    : "sectionBtn"
+                }
+                onClick={() => pressButton(`INTRO ${intro}`)}
+              >
+                {intro}
+              </button>
+            ))}
           </div>
 
           <div className="controlCluster mainCluster">
@@ -155,11 +117,11 @@ export default function Player() {
               <button
                 key={main}
                 className={
-                  activeMain === main
-                    ? "sectionBtn wide activeLed"
+                  activeButton === `MAIN ${main}`
+                    ? "sectionBtn wide activeBlueLed"
                     : "sectionBtn wide"
                 }
-                onClick={() => setActiveMain(main)}
+                onClick={() => pressButton(`MAIN ${main}`)}
               >
                 {main}
               </button>
@@ -168,20 +130,64 @@ export default function Player() {
 
           <div className="controlCluster">
             <span className="clusterLabel">FILL IN</span>
-            <button className="sectionBtn">I</button>
-            <button className="sectionBtn">II</button>
+            {["I", "II", "III", "IV"].map((fill) => (
+              <button
+                key={fill}
+                className={
+                  activeButton === `FILL ${fill}`
+                    ? "sectionBtn activeBlueLed"
+                    : "sectionBtn"
+                }
+                onClick={() => pressButton(`FILL ${fill}`)}
+              >
+                {fill}
+              </button>
+            ))}
           </div>
 
           <div className="controlCluster">
             <span className="clusterLabel">BREAK</span>
-            <button className="sectionBtn">↯</button>
+            <button
+              className={
+                activeButton === "BREAK"
+                  ? "sectionBtn activeBlueLed"
+                  : "sectionBtn"
+              }
+              onClick={() => pressButton("BREAK")}
+            >
+              ↯
+            </button>
           </div>
 
           <div className="controlCluster">
             <span className="clusterLabel">ENDING</span>
-            <button className="sectionBtn">I</button>
-            <button className="sectionBtn">II</button>
-            <button className="sectionBtn">III</button>
+            {["I", "II", "III", "IV"].map((ending) => (
+              <button
+                key={ending}
+                className={
+                  activeButton === `ENDING ${ending}`
+                    ? "sectionBtn activeBlueLed"
+                    : "sectionBtn"
+                }
+                onClick={() => pressButton(`ENDING ${ending}`)}
+              >
+                {ending}
+              </button>
+            ))}
+          </div>
+
+          <div className="controlCluster playPauseCluster">
+            <span className="clusterLabel">PLAY / PAUSE</span>
+            <button
+              className={
+                isPlaying
+                  ? "sectionBtn playPauseBtn activeBlueLed"
+                  : "sectionBtn playPauseBtn"
+              }
+              onClick={togglePlayPause}
+            >
+              {isPlaying ? "❚❚" : "▶"}
+            </button>
           </div>
         </section>
       </section>
