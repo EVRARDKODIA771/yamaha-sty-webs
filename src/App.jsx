@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import Upload from "./pages/Upload";
+import Player from "./pages/Player";
 
 export default function App() {
   const [route, setRoute] = useState(
@@ -50,24 +51,7 @@ export default function App() {
   }
 
   if (route === "/player") {
-    return (
-      <div className="app">
-        <main className="playerPlaceholder">
-          <h1>Lecteur Yamaha STY</h1>
-
-          <p>
-            Interface PSR-SX700 en préparation...
-          </p>
-
-          <button
-            className="menuBtn"
-            onClick={() => navigateTo("/")}
-          >
-            Retour accueil
-          </button>
-        </main>
-      </div>
-    );
+    return <Player />;
   }
 
   return (
