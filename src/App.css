@@ -4,210 +4,135 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #343942, #0b0d10 60%);
+  background: #050608;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .app {
   min-height: 100vh;
-  padding: 24px;
+  background:
+    radial-gradient(circle at top, #252b35 0%, #080a0e 45%, #000 100%);
+  color: white;
+  padding: 32px;
 }
 
 .topbar {
+  width: min(1150px, 100%);
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(145deg, #1d2229, #0d0f13);
-  border: 1px solid #3a424d;
-  border-radius: 22px;
-  padding: 20px 28px;
-  box-shadow: 0 20px 60px #0008;
+  background: rgba(12, 15, 20, 0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 28px;
+  padding: 22px 30px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.65);
 }
 
 .topbar h1 {
   margin: 0;
-  font-size: 28px;
+  color: white;
+  font-size: 30px;
+  letter-spacing: 0.5px;
 }
 
 .topbar p {
-  margin: 6px 0 0;
-  color: #aeb7c4;
+  margin: 8px 0 0;
+  color: #c9d3df;
 }
 
-.loginBtn,
-.back,
-button {
-  border: none;
-  border-radius: 14px;
-  padding: 14px 18px;
-  background: linear-gradient(145deg, #333b46, #15191f);
+.loginBtn {
   color: white;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 #ffffff22, 0 8px 18px #0008;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  background: linear-gradient(145deg, #46515e, #20252d);
+  background: linear-gradient(145deg, #2b323c, #11151b);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 18px;
+  padding: 14px 20px;
 }
 
 .home {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-top: 80px;
+  min-height: calc(100vh - 150px);
+  width: min(1150px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 34px;
+  text-align: center;
+}
+
+.home::before {
+  content: "Yamaha STY Web Player";
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: 900;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.home::after {
+  content: "Charge, lis et gère tes styles Yamaha dans une interface web professionnelle.";
+  color: #c9d3df;
+  font-size: 18px;
+  margin-top: -24px;
 }
 
 .home button {
-  height: 180px;
+  width: min(620px, 100%);
+  height: 92px;
+  color: white;
   font-size: 24px;
+  font-weight: 800;
   border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background:
+    linear-gradient(145deg, rgba(68,78,92,0.96), rgba(13,16,22,0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 18px 45px rgba(0,0,0,0.65);
+  cursor: pointer;
 }
 
-.panel {
-  margin-top: 32px;
-  background: #11161d;
-  border: 1px solid #37404d;
-  border-radius: 26px;
-  padding: 28px;
-  box-shadow: 0 20px 70px #0008;
+.home button:hover {
+  transform: translateY(-3px);
+  background:
+    linear-gradient(145deg, rgba(90,103,122,0.98), rgba(20,25,34,0.98));
 }
 
-.panel h2 {
-  font-size: 32px;
-}
-
-input[type="file"] {
-  display: block;
-  margin-top: 24px;
-  padding: 24px;
-  width: 100%;
-  background: #07090c;
-  border: 2px dashed #586475;
-  border-radius: 20px;
-  color: white;
-}
-
-.hint {
-  margin-top: 20px;
-  color: #aeb7c4;
-}
-
-.manageRow {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 12px;
+.videoIntro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
   align-items: center;
-  background: #090c10;
-  padding: 14px;
-  margin-top: 12px;
-  border-radius: 16px;
-}
-
-.danger {
-  background: linear-gradient(145deg, #742b2b, #2a0909);
-}
-
-.workstation {
-  max-width: 1180px;
-  margin: 30px auto;
-  background: linear-gradient(145deg, #2d333b, #0a0c0f);
-  border: 2px solid #4a5360;
-  border-radius: 40px;
-  padding: 28px;
-  box-shadow: 0 30px 100px #000;
-}
-
-.screen {
-  margin-top: 24px;
-  background: linear-gradient(145deg, #d7eefc, #7fb8dd);
-  color: #06111a;
-  border: 12px solid #111820;
-  border-radius: 28px;
-  padding: 18px;
-  box-shadow: inset 0 0 30px #0006;
-}
-
-.screenHeader {
-  display: flex;
-  justify-content: space-between;
-  background: #06243a;
-  color: white;
-  padding: 12px 16px;
-  border-radius: 14px;
-}
-
-.styleGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 18px;
-}
-
-.style {
-  background: linear-gradient(145deg, #ffffff, #c8e4f5);
-  color: #06111a;
-  border: 1px solid #5a8aaa;
-  box-shadow: none;
-  text-align: left;
-}
-
-.style.active {
-  background: linear-gradient(145deg, #ffe082, #ffb300);
-  color: #111;
-}
-
-.screenFooter {
-  margin-top: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.screenFooter button {
-  background: #12364f;
-}
-
-.controls {
-  margin-top: 28px;
-  display: grid;
-  gap: 18px;
-}
-
-.controlGroup {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
   justify-content: center;
 }
 
-.controlGroup button {
-  min-width: 120px;
-  height: 58px;
+.videoIntro video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
 }
 
-.play {
-  background: linear-gradient(145deg, #15803d, #052e16);
+.skipVideo {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 10000;
+  color: white;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px;
+  padding: 14px 22px;
 }
 
-.mainControls button {
-  background: linear-gradient(145deg, #8a6b22, #302107);
+button {
+  color: white;
 }
 
-@media (max-width: 800px) {
-  .home {
-    grid-template-columns: 1fr;
-  }
-
-  .styleGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .topbar {
-    flex-direction: column;
-    gap: 18px;
-    align-items: flex-start;
-  }
+.panel,
+.workstation {
+  color: white;
 }
