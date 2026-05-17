@@ -131,8 +131,127 @@ button {
   cursor: pointer;
 }
 
+/* PAGE UPLOAD */
+
+.uploadPage {
+  min-height: 100vh;
+  width: 100%;
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at center top, #252b35 0%, #080a0e 42%, #000 100%);
+}
+
+.uploadCard {
+  width: min(620px, 100%);
+  padding: 30px;
+  border-radius: 34px;
+  background: rgba(10, 13, 18, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75);
+}
+
+.uploadHeader {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.uploadHeader h1 {
+  margin: 0;
+  color: white;
+  font-size: clamp(30px, 5vw, 42px);
+  font-weight: 900;
+}
+
+.uploadHeader p {
+  margin: 10px auto 0;
+  max-width: 430px;
+  color: #c9d3df;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.uploadDropZone {
+  min-height: 210px;
+  padding: 28px;
+  border-radius: 28px;
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  background: rgba(4, 7, 12, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.uploadDropZone input {
+  display: none;
+}
+
+.uploadIcon {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #5d6675, #1b222d);
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  color: white;
+}
+
+.uploadDropZone strong {
+  color: white;
+  font-size: 20px;
+}
+
+.uploadDropZone small {
+  color: #9faabc;
+}
+
+.filePreview {
+  margin-top: 24px;
+}
+
+.filePreview h3 {
+  color: white;
+  margin: 0 0 12px;
+}
+
+.fileRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-radius: 14px;
+  background: #070a0f;
+  color: white;
+}
+
+.fileRow small {
+  color: #c9d3df;
+}
+
+.validateUploadBtn {
+  width: 100%;
+  margin-top: 26px;
+  min-height: 58px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #0f7a3a, #063d1d);
+  color: white;
+  font-weight: 900;
+  font-size: 17px;
+  cursor: pointer;
+}
+
 /* PAGES TEMPORAIRES */
 
+.playerPlaceholder,
 .panel,
 .workstation {
   width: min(1050px, calc(100% - 32px));
@@ -144,6 +263,26 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+.playerPlaceholder {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.playerPlaceholder h1,
+.panel h2 {
+  color: white;
+}
+
+.playerPlaceholder p,
+.panel p,
+.hint {
+  color: #c9d3df;
+}
+
 .back {
   margin-bottom: 20px;
   padding: 12px 18px;
@@ -151,15 +290,6 @@ button {
   border: none;
   background: #222b36;
   cursor: pointer;
-}
-
-.panel h2 {
-  color: white;
-}
-
-.panel p,
-.hint {
-  color: #c9d3df;
 }
 
 input[type="file"] {
@@ -269,17 +399,27 @@ input[type="file"] {
 }
 
 @media (max-width: 650px) {
-  .homePage {
+  .homePage,
+  .uploadPage {
     padding: 18px;
   }
 
-  .homeCenter {
+  .homeCenter,
+  .uploadCard {
     padding: 28px 20px;
   }
 
   .menuBtn {
     min-height: 58px;
     font-size: 16px;
+  }
+
+  .uploadDropZone {
+    min-height: 180px;
+  }
+
+  .fileRow {
+    flex-direction: column;
   }
 
   .styleGrid {
