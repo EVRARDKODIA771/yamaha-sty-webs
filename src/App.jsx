@@ -10,6 +10,7 @@ const demoStyles = [
 
 export default function App() {
   const [page, setPage] = useState("home");
+  const [showIntroVideo, setShowIntroVideo] = useState(false);
   const [selected, setSelected] = useState(demoStyles[0]);
   const [start, setStart] = useState(0);
   const visible = demoStyles.slice(start, start + 10);
@@ -22,8 +23,31 @@ export default function App() {
     if (start - 10 >= 0) setStart(start - 10);
   };
 
+  const openPlayerWithIntro = () => {
+    setShowIntroVideo(true);
+  };
+
+  const closeIntroAndOpenPlayer = () => {
+    setShowIntroVideo(false);
+    setPage("player");
+  };
+
   return (
     <div className="app">
+      {showIntroVideo && (
+        <div className="videoIntro">
+          <video
+            src="/logo.mp4"
+            autoPlay
+            playsInline
+            onEnded={closeIntroAndOpenPlayer}
+          />
+          <button className="skipVideo" onClick={closeIntroAndOpenPlayer}>
+            Passer
+          </button>
+        </div>
+      )}
+
       <header className="topbar">
         <div>
           <h1>Yamaha STY Web Player</h1>
@@ -35,7 +59,7 @@ export default function App() {
       {page === "home" && (
         <main className="home">
           <button onClick={() => setPage("upload")}>Ajouter des styles</button>
-          <button onClick={() => setPage("player")}>Lire des styles</button>
+          <button onClick={openPlayerWithIntro}>Lire des styles</button>
           <button onClick={() => setPage("manage")}>Modifier / Supprimer</button>
         </main>
       )}
