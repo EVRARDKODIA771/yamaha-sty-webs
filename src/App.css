@@ -84,7 +84,9 @@ button {
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: linear-gradient(145deg, #323a46, #10141b);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 14px 32px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 14px 32px rgba(0, 0, 0, 0.55);
   font-size: 18px;
   font-weight: 800;
   cursor: pointer;
@@ -201,7 +203,7 @@ button {
   font-size: 17px;
 }
 
-/* PLAYER PAGE */
+/* PLAYER */
 
 .playerPage {
   min-height: 100vh;
@@ -292,8 +294,13 @@ button {
   z-index: 3;
   pointer-events: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(255,255,255,.13), transparent 28%, transparent 72%, rgba(255,255,255,.045));
-  mix-blend-mode: screen;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.13),
+    transparent 28%,
+    transparent 72%,
+    rgba(255,255,255,.045)
+  );
 }
 
 .styleScreen {
@@ -325,7 +332,7 @@ button {
   font-weight: 800;
 }
 
-/* SCREEN ALIGNEMENT */
+/* SCREEN */
 
 .screenBody {
   display: grid;
@@ -343,33 +350,37 @@ button {
   grid-template-rows: repeat(5, 42px);
 }
 
-.styleColumn:first-child {
-  justify-self: stretch;
-}
-
-.styleColumn:last-child {
-  justify-self: stretch;
-}
-
 .screenStyle {
   width: 100%;
   height: 42px;
-  padding: 0 14px;
+  padding-left: 1.5cm;
+  padding-right: 14px;
   border: none;
   border-bottom: 1px solid rgba(255,255,255,.26);
-  background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.08),
+    rgba(255,255,255,.025)
+  );
   color: #f6fbff;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
-}
-
-.styleColumn:first-child .screenStyle {
   text-align: left;
+  position: relative;
 }
 
-.styleColumn:last-child .screenStyle {
-  text-align: right;
+.screenStyle::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: calc(1.5cm - 20px);
+  height: 24px;
+  transform: translateY(-50%);
+  border-radius: 6px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
 }
 
 .screenStyle:hover {
@@ -379,44 +390,17 @@ button {
 .screenStyle.active {
   color: white;
   background:
-    linear-gradient(90deg, rgba(255,139,20,.58), rgba(255,139,20,.12));
+    linear-gradient(
+      90deg,
+      rgba(255,139,20,.58),
+      rgba(255,139,20,.12)
+    );
   box-shadow:
     inset 0 0 0 1px rgba(255,166,56,.9),
     0 0 20px rgba(255,119,0,.38);
 }
 
-/* HARDWARE BUTTONS */
-
-.hwBtn,
-.sectionBtn {
-  position: relative;
-  height: 42px;
-  border-radius: 9px;
-  border: 1px solid rgba(255,255,255,.16);
-  background:
-    radial-gradient(circle at center, rgba(255,142,24,.18), transparent 45%),
-    linear-gradient(145deg, #2a2f37, #050609 70%);
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,.18),
-    inset 0 -7px 13px rgba(0,0,0,.82),
-    0 8px 16px rgba(0,0,0,.65);
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.hwBtn::after,
-.sectionBtn::after {
-  content: "";
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  width: 20px;
-  height: 7px;
-  transform: translateX(-50%);
-  border-radius: 99px;
-  background: rgba(255,144,20,.6);
-  box-shadow: 0 0 12px rgba(255,119,0,.55);
-}
+/* CONTROLS */
 
 .styleControlPanel {
   margin-top: 24px;
@@ -455,9 +439,34 @@ button {
 }
 
 .sectionBtn {
+  position: relative;
   min-width: 38px;
   height: 42px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(circle at center, rgba(255,142,24,.18), transparent 45%),
+    linear-gradient(145deg, #2a2f37, #050609 70%);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.18),
+    inset 0 -7px 13px rgba(0,0,0,.82),
+    0 8px 16px rgba(0,0,0,.65);
+  font-weight: 900;
+  cursor: pointer;
   font-size: 13px;
+}
+
+.sectionBtn::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 20px;
+  height: 7px;
+  transform: translateX(-50%);
+  border-radius: 99px;
+  background: rgba(255,144,20,.6);
+  box-shadow: 0 0 12px rgba(255,119,0,.55);
 }
 
 .sectionBtn.wide {
@@ -474,39 +483,37 @@ button {
   font-size: 18px;
 }
 
-/* BLUE ACTIVE LED */
+/* BLUE LED */
 
 .activeBlueLed {
   background:
-    radial-gradient(circle at center, rgba(0, 162, 255, 0.88), rgba(0, 82, 160, 0.32) 44%, rgba(0, 0, 0, 0.12) 72%),
+    radial-gradient(circle at center,
+      rgba(0, 162, 255, 0.88),
+      rgba(0, 82, 160, 0.32) 44%,
+      rgba(0,0,0,.12) 72%
+    ),
     linear-gradient(145deg, #16364f, #03070b 75%) !important;
+
   box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.28),
-    inset 0 -10px 18px rgba(0, 0, 0, 0.68),
-    0 0 22px rgba(0, 153, 255, 0.9),
-    0 0 42px rgba(0, 95, 255, 0.35),
-    0 10px 20px rgba(0, 0, 0, 0.72) !important;
+    inset 0 1px 2px rgba(255,255,255,.28),
+    inset 0 -10px 18px rgba(0,0,0,.68),
+    0 0 22px rgba(0,153,255,.9),
+    0 0 42px rgba(0,95,255,.35),
+    0 10px 20px rgba(0,0,0,.72) !important;
 }
 
 .activeBlueLed::after {
-  background: rgba(0, 185, 255, 0.95) !important;
+  background: rgba(0,185,255,.95) !important;
   box-shadow:
-    0 0 14px rgba(0, 170, 255, 0.95),
-    0 0 28px rgba(0, 110, 255, 0.7) !important;
+    0 0 14px rgba(0,170,255,.95),
+    0 0 28px rgba(0,110,255,.7) !important;
 }
 
-@media (max-width: 1000px) {
-  .yamahaPanel {
-    padding: 28px 18px;
-  }
+/* RESPONSIVE */
 
+@media (max-width: 1000px) {
   .screenBodyTwoCols {
     grid-template-columns: 1fr;
-    column-gap: 0;
-  }
-
-  .styleColumn:last-child .screenStyle {
-    text-align: left;
   }
 
   .fullStyleControl {
@@ -524,28 +531,6 @@ button {
   .homeCenter,
   .uploadCard {
     padding: 28px 20px;
-  }
-
-  .menuBtn {
-    min-height: 58px;
-    font-size: 16px;
-  }
-
-  .fileRow {
-    flex-direction: column;
-  }
-
-  .brand {
-    font-size: 24px;
-  }
-
-  .hardwareScreenFrame {
-    width: 100%;
-    padding: 14px;
-  }
-
-  .styleScreen {
-    padding: 10px;
   }
 
   .fullStyleControl {
