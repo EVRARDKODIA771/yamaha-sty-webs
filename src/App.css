@@ -2,102 +2,100 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
   margin: 0;
-  background: #050608;
+  min-height: 100%;
+}
+
+body {
+  background: #000;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  font-family: inherit;
+  color: white;
 }
 
 .app {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, #252b35 0%, #080a0e 45%, #000 100%);
+    radial-gradient(circle at top, #252b35 0%, #080a0e 42%, #000 100%);
   color: white;
-  padding: 32px;
 }
 
-.topbar {
-  width: min(1150px, 100%);
-  margin: 0 auto;
+/* PAGE ACCUEIL */
+
+.homePage {
+  min-height: 100vh;
+  width: 100%;
+  padding: 28px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: rgba(12, 15, 20, 0.92);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 28px;
-  padding: 22px 30px;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.65);
-}
-
-.topbar h1 {
-  margin: 0;
-  color: white;
-  font-size: 30px;
-  letter-spacing: 0.5px;
-}
-
-.topbar p {
-  margin: 8px 0 0;
-  color: #c9d3df;
-}
-
-.loginBtn {
-  color: white;
-  background: linear-gradient(145deg, #2b323c, #11151b);
-  border: 1px solid rgba(255,255,255,0.16);
-  border-radius: 18px;
-  padding: 14px 20px;
-}
-
-.home {
-  min-height: calc(100vh - 150px);
-  width: min(1150px, 100%);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 34px;
+}
+
+.homeCenter {
+  width: min(520px, 100%);
+  padding: 34px 28px;
+  border-radius: 34px;
+  background: rgba(10, 13, 18, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75);
   text-align: center;
 }
 
-.home::before {
-  content: "Yamaha STY Web Player";
-  font-size: clamp(38px, 6vw, 72px);
+.logoArea h1 {
+  margin: 0;
+  color: white;
+  font-size: clamp(34px, 6vw, 52px);
   font-weight: 900;
-  color: white;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
-.home::after {
-  content: "Charge, lis et gère tes styles Yamaha dans une interface web professionnelle.";
+.logoArea p {
+  margin: 12px auto 0;
+  max-width: 420px;
   color: #c9d3df;
-  font-size: 18px;
-  margin-top: -24px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-.home button {
-  width: min(620px, 100%);
-  height: 92px;
-  color: white;
-  font-size: 24px;
-  font-weight: 800;
-  border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.16);
-  background:
-    linear-gradient(145deg, rgba(68,78,92,0.96), rgba(13,16,22,0.98));
+.menuButtons {
+  margin-top: 34px;
+  display: grid;
+  gap: 16px;
+}
+
+.menuBtn {
+  width: 100%;
+  min-height: 64px;
+  padding: 16px 22px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(145deg, #323a46, #10141b);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.18),
-    0 18px 45px rgba(0,0,0,0.65);
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 14px 32px rgba(0, 0, 0, 0.55);
+  font-size: 18px;
+  font-weight: 800;
   cursor: pointer;
 }
 
-.home button:hover {
-  transform: translateY(-3px);
-  background:
-    linear-gradient(145deg, rgba(90,103,122,0.98), rgba(20,25,34,0.98));
+.menuBtn.primary {
+  background: linear-gradient(145deg, #5d6675, #1b222d);
+  border-color: rgba(255, 255, 255, 0.25);
 }
+
+.menuBtn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(145deg, #4c5868, #171d26);
+}
+
+/* VIDEO INTRO */
 
 .videoIntro {
   position: fixed;
@@ -118,21 +116,172 @@ body {
 
 .skipVideo {
   position: fixed;
-  right: 28px;
-  bottom: 28px;
+  right: 24px;
+  bottom: 24px;
   z-index: 10000;
-  color: white;
-  background: rgba(0,0,0,0.75);
-  border: 1px solid rgba(255,255,255,0.25);
+  padding: 12px 20px;
   border-radius: 16px;
-  padding: 14px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.72);
+  cursor: pointer;
 }
 
-button {
-  color: white;
-}
+/* PAGES TEMPORAIRES */
 
 .panel,
 .workstation {
+  width: min(1050px, calc(100% - 32px));
+  margin: 28px auto;
+  padding: 26px;
+  border-radius: 28px;
+  background: rgba(12, 15, 20, 0.92);
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.back {
+  margin-bottom: 20px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: none;
+  background: #222b36;
+  cursor: pointer;
+}
+
+.panel h2 {
+  color: white;
+}
+
+.panel p,
+.hint {
+  color: #c9d3df;
+}
+
+input[type="file"] {
+  width: 100%;
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 18px;
+  border: 2px dashed #596579;
+  background: #05070a;
+  color: white;
+}
+
+.manageRow {
+  margin-top: 12px;
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  border-radius: 16px;
+  background: #070a0f;
+}
+
+.manageRow button,
+.screenFooter button,
+.controlGroup button {
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  background: #26313d;
+  cursor: pointer;
+}
+
+.danger {
+  background: #6b1d1d !important;
+}
+
+/* LECTEUR TEMPORAIRE */
+
+.screen {
+  background: linear-gradient(145deg, #d8f0ff, #7db8dc);
+  color: #07131d;
+  border: 10px solid #0b1118;
+  border-radius: 26px;
+  padding: 18px;
+}
+
+.screenHeader,
+.screenFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.screenHeader {
+  background: #07253b;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 14px;
+}
+
+.styleGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.style {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #6792ad;
+  background: #eaf7ff;
+  color: #06111a;
+  text-align: left;
+  cursor: pointer;
+}
+
+.style.active {
+  background: linear-gradient(145deg, #ffe18a, #f6ad18);
+  color: #111;
+}
+
+.screenFooter {
+  margin-top: 18px;
+}
+
+.controls {
+  margin-top: 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.controlGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.play {
+  background: #0f7a3a !important;
+}
+
+.mainControls button {
+  background: #7a5a18;
+}
+
+@media (max-width: 650px) {
+  .homePage {
+    padding: 18px;
+  }
+
+  .homeCenter {
+    padding: 28px 20px;
+  }
+
+  .menuBtn {
+    min-height: 58px;
+    font-size: 16px;
+  }
+
+  .styleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .manageRow {
+    grid-template-columns: 1fr;
+  }
 }
