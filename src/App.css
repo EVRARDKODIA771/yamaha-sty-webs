@@ -30,7 +30,7 @@ button {
   color: white;
 }
 
-/* ACCUEIL */
+/* ACCUEIL + UPLOAD */
 
 .homePage,
 .uploadPage {
@@ -206,7 +206,7 @@ button {
 .playerPage {
   min-height: 100vh;
   width: 100%;
-  padding: 28px;
+  padding: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,9 +217,9 @@ button {
 
 .yamahaPanel {
   position: relative;
-  width: min(1280px, 100%);
-  min-height: 720px;
-  padding: 34px 42px 38px;
+  width: min(1320px, 100%);
+  min-height: 650px;
+  padding: 30px 34px 28px;
   border-radius: 28px;
   background:
     linear-gradient(90deg, rgba(255,255,255,.035), transparent 12%, rgba(255,255,255,.025) 50%, transparent 88%, rgba(255,255,255,.035)),
@@ -244,10 +244,10 @@ button {
 
 .playerBack {
   position: absolute;
-  top: 24px;
-  left: 28px;
+  top: 22px;
+  left: 26px;
   z-index: 2;
-  padding: 10px 16px;
+  padding: 9px 14px;
   border-radius: 12px;
   background: linear-gradient(145deg, #2d3540, #0b0e13);
   border: 1px solid rgba(255,255,255,.13);
@@ -256,32 +256,30 @@ button {
 
 .panelTop {
   text-align: center;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .brand {
-  font-size: 34px;
+  font-size: 30px;
   font-weight: 900;
   letter-spacing: 2px;
   color: #e8edf3;
-  text-shadow: 0 2px 8px rgba(255,255,255,.13);
 }
 
 .panelHint {
-  margin-top: 6px;
+  margin-top: 5px;
   color: #98a3b1;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 2px;
 }
 
 .hardwareScreenFrame {
   position: relative;
-  width: min(760px, 92%);
+  width: min(800px, 92%);
   margin: 0 auto;
-  padding: 22px;
+  padding: 20px;
   border-radius: 18px;
-  background:
-    linear-gradient(145deg, #07090c, #171c24 45%, #020304);
+  background: linear-gradient(145deg, #07090c, #171c24 45%, #020304);
   border: 1px solid rgba(255,255,255,.13);
   box-shadow:
     inset 0 0 28px rgba(0,0,0,.95),
@@ -290,7 +288,7 @@ button {
 
 .glassReflection {
   position: absolute;
-  inset: 22px;
+  inset: 20px;
   z-index: 3;
   pointer-events: none;
   border-radius: 10px;
@@ -301,7 +299,7 @@ button {
 .styleScreen {
   position: relative;
   z-index: 1;
-  min-height: 320px;
+  min-height: 285px;
   padding: 14px;
   border-radius: 10px;
   background:
@@ -312,14 +310,14 @@ button {
 }
 
 .screenTitle {
-  height: 42px;
+  height: 38px;
   padding: 0 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: white;
   border-bottom: 1px solid rgba(255,255,255,.18);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .screenTitle span {
@@ -327,28 +325,51 @@ button {
   font-weight: 800;
 }
 
+/* SCREEN ALIGNEMENT */
+
 .screenBody {
   display: grid;
-  grid-template-columns: 1fr 230px 1fr;
   gap: 12px;
   padding-top: 12px;
 }
 
+.screenBodyTwoCols {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 54px;
+}
+
 .styleColumn {
   display: grid;
+  grid-template-rows: repeat(5, 42px);
+}
+
+.styleColumn:first-child {
+  justify-self: stretch;
+}
+
+.styleColumn:last-child {
+  justify-self: stretch;
 }
 
 .screenStyle {
-  height: 48px;
+  width: 100%;
+  height: 42px;
   padding: 0 14px;
-  text-align: left;
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,.22);
+  border-bottom: 1px solid rgba(255,255,255,.26);
   background: linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
   color: #f6fbff;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.styleColumn:first-child .screenStyle {
+  text-align: left;
+}
+
+.styleColumn:last-child .screenStyle {
+  text-align: right;
 }
 
 .screenStyle:hover {
@@ -364,61 +385,21 @@ button {
     0 0 20px rgba(255,119,0,.38);
 }
 
-.centerTransport {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  justify-content: center;
-  border-left: 1px solid rgba(255,255,255,.12);
-  border-right: 1px solid rgba(255,255,255,.12);
-}
-
-.tempoBox {
-  width: 100%;
-  padding: 18px 12px;
-  border-radius: 8px;
-  text-align: center;
-  background: linear-gradient(145deg, #05080c, #111923);
-  border: 1px solid rgba(255,255,255,.08);
-}
-
-.tempoBox strong,
-.tempoBox span,
-.tempoBox small {
-  display: block;
-}
-
-.tempoBox span {
-  margin-top: 8px;
-  font-size: 24px;
-}
-
-.tempoBox small {
-  margin-top: 6px;
-  color: #cdd7e2;
-}
-
-.transportGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 62px);
-  gap: 10px;
-  justify-content: center;
-}
+/* HARDWARE BUTTONS */
 
 .hwBtn,
 .sectionBtn {
   position: relative;
-  height: 54px;
-  border-radius: 12px;
+  height: 42px;
+  border-radius: 9px;
   border: 1px solid rgba(255,255,255,.16);
   background:
     radial-gradient(circle at center, rgba(255,142,24,.18), transparent 45%),
     linear-gradient(145deg, #2a2f37, #050609 70%);
   box-shadow:
     inset 0 1px 2px rgba(255,255,255,.18),
-    inset 0 -8px 16px rgba(0,0,0,.82),
-    0 10px 20px rgba(0,0,0,.65);
+    inset 0 -7px 13px rgba(0,0,0,.82),
+    0 8px 16px rgba(0,0,0,.65);
   font-weight: 900;
   cursor: pointer;
 }
@@ -427,79 +408,91 @@ button {
 .sectionBtn::after {
   content: "";
   position: absolute;
-  top: 9px;
+  top: 7px;
   left: 50%;
-  width: 24px;
-  height: 9px;
+  width: 20px;
+  height: 7px;
   transform: translateX(-50%);
   border-radius: 99px;
   background: rgba(255,144,20,.6);
   box-shadow: 0 0 12px rgba(255,119,0,.55);
 }
 
-.hwBtn.small {
-  font-size: 14px;
-}
-
-.playHw {
-  grid-row: span 2;
-  height: 118px;
-  font-size: 34px;
-  color: #fff4df;
-}
-
-.activeLed {
-  background:
-    radial-gradient(circle at center, rgba(255,159,31,.68), rgba(255,115,0,.22) 44%, rgba(0,0,0,.1) 70%),
-    linear-gradient(145deg, #473015, #080503 75%);
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,.24),
-    inset 0 -10px 18px rgba(0,0,0,.68),
-    0 0 24px rgba(255,128,0,.62),
-    0 12px 22px rgba(0,0,0,.72);
-}
-
 .styleControlPanel {
-  margin-top: 34px;
-  padding: 30px 18px 10px;
+  margin-top: 24px;
+  padding: 24px 10px 6px;
   display: grid;
-  grid-template-columns: 1.1fr 1.65fr .85fr .6fr 1.1fr;
-  gap: 18px;
+  gap: 8px;
+}
+
+.fullStyleControl {
+  grid-template-columns: 1.2fr 1.2fr 1.2fr .6fr 1.2fr .75fr;
 }
 
 .controlCluster {
   position: relative;
-  min-height: 116px;
-  padding: 28px 12px 12px;
-  border-top: 1px solid rgba(255,255,255,.48);
+  min-height: 82px;
+  padding: 22px 4px 6px;
+  border-top: 1px solid rgba(255,255,255,.42);
   display: flex;
   align-items: end;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .clusterLabel {
   position: absolute;
-  top: -12px;
+  top: -11px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0 10px;
+  padding: 0 7px;
   background: #0b0d11;
   color: #dfe5ec;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 900;
-  letter-spacing: 1px;
+  letter-spacing: .6px;
   white-space: nowrap;
 }
 
 .sectionBtn {
-  min-width: 64px;
-  height: 58px;
-  font-size: 18px;
+  min-width: 38px;
+  height: 42px;
+  font-size: 13px;
 }
 
 .sectionBtn.wide {
-  min-width: 86px;
+  min-width: 43px;
+}
+
+.playPauseCluster {
+  border-top-color: rgba(0, 170, 255, 0.55);
+}
+
+.playPauseBtn {
+  min-width: 50px;
+  height: 44px;
+  font-size: 18px;
+}
+
+/* BLUE ACTIVE LED */
+
+.activeBlueLed {
+  background:
+    radial-gradient(circle at center, rgba(0, 162, 255, 0.88), rgba(0, 82, 160, 0.32) 44%, rgba(0, 0, 0, 0.12) 72%),
+    linear-gradient(145deg, #16364f, #03070b 75%) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.28),
+    inset 0 -10px 18px rgba(0, 0, 0, 0.68),
+    0 0 22px rgba(0, 153, 255, 0.9),
+    0 0 42px rgba(0, 95, 255, 0.35),
+    0 10px 20px rgba(0, 0, 0, 0.72) !important;
+}
+
+.activeBlueLed::after {
+  background: rgba(0, 185, 255, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(0, 170, 255, 0.95),
+    0 0 28px rgba(0, 110, 255, 0.7) !important;
 }
 
 @media (max-width: 1000px) {
@@ -507,26 +500,17 @@ button {
     padding: 28px 18px;
   }
 
-  .screenBody {
+  .screenBodyTwoCols {
     grid-template-columns: 1fr;
+    column-gap: 0;
   }
 
-  .centerTransport {
-    border: none;
+  .styleColumn:last-child .screenStyle {
+    text-align: left;
   }
 
-  .transportGrid {
-    grid-template-columns: repeat(5, 58px);
-  }
-
-  .playHw {
-    grid-row: auto;
-    height: 54px;
-    font-size: 24px;
-  }
-
-  .styleControlPanel {
-    grid-template-columns: 1fr;
+  .fullStyleControl {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -562,5 +546,9 @@ button {
 
   .styleScreen {
     padding: 10px;
+  }
+
+  .fullStyleControl {
+    grid-template-columns: 1fr;
   }
 }
