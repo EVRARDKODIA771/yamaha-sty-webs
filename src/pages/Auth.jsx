@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Auth.css";
 
 const API_URL =
-  "https://yamaha-style-backend.vercel.app/";
+  "https://yamaha-style-backend.vercel.app";
 
 export default function Auth() {
 
