@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Auth.css";
 
 const API_URL =
-  "https://p01--yamahabackend--cb8j2vsxyh7n.code.run";
+  "https://p01--yamahabackend02--cb8j2vsxyh7n.code.run/";
 
 export default function Auth() {
 
