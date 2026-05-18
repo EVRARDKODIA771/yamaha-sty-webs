@@ -13,22 +13,32 @@
   background:
     radial-gradient(
       circle at top,
-      rgba(90, 100, 120, 0.28),
+      rgba(120, 130, 150, 0.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255,255,255,.06),
       transparent 35%
     ),
     linear-gradient(
       180deg,
       #06080d 0%,
       #020305 45%,
-      #000 100%
+      #000000 100%
     );
 }
+
+
+/* ===================================================== */
+/* GLOW */
+/* ===================================================== */
 
 .authGlow {
   position: absolute;
 
-  width: 700px;
-  height: 700px;
+  width: 800px;
+  height: 800px;
 
   border-radius: 50%;
 
@@ -39,62 +49,97 @@
       transparent 65%
     );
 
-  filter: blur(90px);
+  filter: blur(110px);
 
-  animation: authPulse 6s ease-in-out infinite;
+  animation: authPulse 7s ease-in-out infinite;
+
+  pointer-events: none;
 }
 
 @keyframes authPulse {
 
   0% {
     transform: scale(1);
-    opacity: .7;
+    opacity: .55;
   }
 
   50% {
     transform: scale(1.08);
-    opacity: 1;
+    opacity: .95;
   }
 
   100% {
     transform: scale(1);
-    opacity: .7;
+    opacity: .55;
   }
 }
+
+
+/* ===================================================== */
+/* CARD */
+/* ===================================================== */
 
 .authCard {
   position: relative;
   z-index: 2;
 
-  width: min(440px, 92%);
+  width: min(460px, 92%);
 
-  padding: 42px 34px;
+  padding: 46px 34px;
 
-  border-radius: 34px;
+  border-radius: 36px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(30,35,45,.95),
-      rgba(5,7,10,.98)
+      rgba(32,38,50,.88),
+      rgba(8,10,15,.94)
     );
 
   border: 1px solid rgba(255,255,255,.12);
 
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.12),
-    0 40px 120px rgba(0,0,0,.9);
+    0 40px 120px rgba(0,0,0,.92);
 
-  backdrop-filter: blur(10px);
+  overflow: hidden;
 }
 
+.authCard::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.28),
+      transparent
+    );
+}
+
+
+/* ===================================================== */
+/* LOGO */
+/* ===================================================== */
+
 .authLogo {
-  width: 92px;
-  height: 92px;
+  width: 96px;
+  height: 96px;
 
-  margin: 0 auto 24px;
+  margin: 0 auto 26px;
 
-  border-radius: 24px;
+  border-radius: 28px;
 
   display: flex;
   align-items: center;
@@ -103,24 +148,37 @@
   background:
     linear-gradient(
       145deg,
-      #f2f4f7,
-      #8d98a8
+      #ffffff,
+      #9ca7b7
     );
 
   color: black;
 
-  font-size: 42px;
+  font-size: 44px;
   font-weight: 900;
 
   box-shadow:
-    0 18px 40px rgba(0,0,0,.65);
+    0 22px 50px rgba(0,0,0,.75);
+
+  transition: transform .3s ease;
 }
+
+.authLogo:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+
+/* ===================================================== */
+/* TITLE */
+/* ===================================================== */
 
 .authTitle {
   text-align: center;
 
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 900;
+
+  letter-spacing: -.02em;
 
   margin-bottom: 10px;
 
@@ -130,31 +188,70 @@
 .authSubtitle {
   text-align: center;
 
-  color: #a8b2c0;
+  color: #a7b2c0;
 
   margin-bottom: 34px;
 
-  line-height: 1.5;
+  line-height: 1.6;
+
+  font-size: 15px;
 }
 
-.authInput {
-  width: 100%;
 
-  min-height: 58px;
+/* ===================================================== */
+/* ERROR */
+/* ===================================================== */
+
+.authError {
+  width: 100%;
 
   margin-bottom: 18px;
 
-  padding: 0 18px;
+  padding: 14px;
 
   border-radius: 18px;
-
-  border: 1px solid rgba(255,255,255,.1);
 
   background:
     linear-gradient(
       145deg,
-      rgba(40,45,55,.95),
-      rgba(10,12,16,.98)
+      rgba(255,70,70,.14),
+      rgba(120,0,0,.16)
+    );
+
+  border: 1px solid rgba(255,80,80,.22);
+
+  color: #ff9c9c;
+
+  text-align: center;
+
+  font-size: 14px;
+
+  backdrop-filter: blur(10px);
+}
+
+
+/* ===================================================== */
+/* INPUT */
+/* ===================================================== */
+
+.authInput {
+  width: 100%;
+
+  min-height: 60px;
+
+  margin-bottom: 18px;
+
+  padding: 0 20px;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(40,45,55,.82),
+      rgba(10,12,16,.94)
     );
 
   color: white;
@@ -163,35 +260,51 @@
 
   outline: none;
 
-  transition: .25s;
+  transition:
+    border-color .25s,
+    transform .25s,
+    box-shadow .25s;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05);
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.authInput::placeholder {
+  color: #7f8a99;
 }
 
 .authInput:focus {
-  border-color: rgba(255,255,255,.35);
+
+  border-color: rgba(255,255,255,.25);
+
+  transform: translateY(-1px);
 
   box-shadow:
-    0 0 0 3px rgba(255,255,255,.06);
+    0 0 0 4px rgba(255,255,255,.05),
+    0 10px 30px rgba(0,0,0,.35);
 }
+
+
+/* ===================================================== */
+/* BUTTON */
+/* ===================================================== */
 
 .authBtn {
   width: 100%;
 
-  min-height: 60px;
+  min-height: 62px;
 
-  margin-top: 10px;
+  margin-top: 8px;
 
   border: none;
 
-  border-radius: 20px;
+  border-radius: 22px;
 
   background:
     linear-gradient(
       145deg,
       #ffffff,
-      #9aa5b5
+      #99a5b5
     );
 
   color: black;
@@ -201,50 +314,93 @@
 
   cursor: pointer;
 
-  transition: all .25s ease;
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    opacity .25s ease;
 
   box-shadow:
-    0 18px 40px rgba(0,0,0,.6);
+    0 18px 45px rgba(0,0,0,.7);
 }
 
-.authBtn:hover {
+.authBtn:hover:not(:disabled) {
+
   transform: translateY(-2px);
 
   box-shadow:
-    0 24px 50px rgba(0,0,0,.7);
+    0 24px 55px rgba(0,0,0,.8);
 }
 
+.authBtn:active:not(:disabled) {
+  transform: scale(.99);
+}
+
+.authBtn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+
+/* ===================================================== */
+/* SWITCH */
+/* ===================================================== */
+
 .authSwitch {
-  margin-top: 24px;
+  margin-top: 26px;
 
   text-align: center;
 }
 
 .authSwitch button {
+
   background: transparent;
   border: none;
 
-  color: #9aa5b5;
+  color: #95a0b0;
 
   font-size: 14px;
 
   cursor: pointer;
 
-  transition: .25s;
+  transition:
+    color .25s,
+    transform .25s;
 }
 
 .authSwitch button:hover {
   color: white;
+  transform: translateY(-1px);
 }
+
+
+/* ===================================================== */
+/* RESPONSIVE */
+/* ===================================================== */
 
 @media (max-width: 600px) {
 
   .authCard {
     padding: 34px 22px;
+    border-radius: 28px;
   }
 
   .authTitle {
-    font-size: 32px;
+    font-size: 34px;
+  }
+
+  .authLogo {
+    width: 82px;
+    height: 82px;
+
+    font-size: 38px;
+  }
+
+  .authInput {
+    min-height: 56px;
+  }
+
+  .authBtn {
+    min-height: 58px;
   }
 
 }
