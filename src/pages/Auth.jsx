@@ -91,8 +91,6 @@ export default function Auth() {
             "Content-Type": "application/json",
           },
 
-          credentials: "include",
-
           body: JSON.stringify(body),
         }
       );
