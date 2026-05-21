@@ -12,29 +12,17 @@ export default function Upload() {
   const [loading, setLoading] =
     useState(false);
 
-  const [logs, setLogs] =
-    useState([]);
-
-  const [result, setResult] =
-    useState(null);
+  const [success, setSuccess] =
+    useState(false);
 
   // =====================================================
-  // ADD LOG
+  // BACK URL
   // =====================================================
 
-  const addLog = (message) => {
-
-    console.log(message);
-
-    setLogs((prev) => [
-
-      ...prev,
-
-      `[${new Date().toLocaleTimeString()}] ${message}`
-
-    ]);
-
-  };
+  const backendUrl =
+    (
+      import.meta.env.VITE_BACKEND_URL || ""
+    ).replace(/\/+$/, "");
 
   // =====================================================
   // HANDLE FILES
@@ -47,19 +35,10 @@ export default function Upload() {
 
     setFiles(selectedFiles);
 
-    addLog(
-      `${selectedFiles.length} fichier(s) sélectionné(s)`
+    console.log(
+      "FILES SELECTED :",
+      selectedFiles
     );
-
-    selectedFiles.forEach((file) => {
-
-      addLog(
-        `Fichier : ${file.name} (${(
-          file.size / 1024
-        ).toFixed(1)} Ko)`
-      );
-
-    });
 
   };
 
@@ -87,8 +66,8 @@ export default function Upload() {
 
       if (files.length === 0) {
 
-        addLog(
-          "Aucun fichier sélectionné"
+        console.error(
+          "NO FILE SELECTED"
         );
 
         return;
@@ -97,18 +76,34 @@ export default function Upload() {
 
       setLoading(true);
 
-      setResult(null);
+      setSuccess(false);
 
-      addLog("=================================");
-      addLog("DÉBUT IMPORTATION");
-      addLog("=================================");
+      console.log("=================================");
+      console.log("STARTING UPLOAD");
+      console.log("=================================");
 
-      const formData = new FormData();
+      console.log(
+        "BACKEND URL :",
+        backendUrl
+      );
+
+      console.log(
+        "UPLOAD URL :",
+        `${backendUrl}/upload`
+      );
+
+      // =====================================================
+      // FORM DATA
+      // =====================================================
+
+      const formData =
+        new FormData();
 
       files.forEach((file) => {
 
-        addLog(
-          `Ajout du fichier : ${file.name}`
+        console.log(
+          "ADDING FILE :",
+          file.name
         );
 
         formData.append(
@@ -118,17 +113,13 @@ export default function Upload() {
 
       });
 
-      addLog(
-        "ENVOI DES FICHIERS AU BACKEND..."
-      );
-
       // =====================================================
       // FETCH
       // =====================================================
 
       const response = await fetch(
 
-        `${import.meta.env.VITE_BACKEND_URL}/upload`,
+        `${backendUrl}/upload`,
 
         {
           method: "POST",
@@ -137,20 +128,28 @@ export default function Upload() {
 
       );
 
-      addLog(
-        `STATUS HTTP : ${response.status}`
+      console.log(
+        "HTTP STATUS :",
+        response.status
       );
 
       const data =
         await response.json();
 
-      console.log(data);
+      console.log(
+        "BACKEND RESPONSE :",
+        data
+      );
+
+      // =====================================================
+      // ERROR
+      // =====================================================
 
       if (!response.ok) {
 
         throw new Error(
           data.error ||
-          "Erreur serveur"
+          "UPLOAD FAILED"
         );
 
       }
@@ -159,40 +158,18 @@ export default function Upload() {
       // SUCCESS
       // =====================================================
 
-      addLog("=================================");
-      addLog("UPLOAD TERMINÉ");
-      addLog("=================================");
+      console.log(
+        "UPLOAD SUCCESS"
+      );
 
-      if (data.results) {
-
-        data.results.forEach((item) => {
-
-          addLog(
-            `STYLE : ${item.originalName}`
-          );
-
-          addLog(
-            `MIDIS : ${item.midiCount}`
-          );
-
-          addLog(
-            `WAVS : ${item.wavCount}`
-          );
-
-        });
-
-      }
-
-      setResult(data);
+      setSuccess(true);
 
     } catch (error) {
 
-      console.error(error);
-
-      addLog("=================================");
-      addLog("ERREUR IMPORTATION");
-      addLog(error.message);
-      addLog("=================================");
+      console.error(
+        "UPLOAD ERROR :",
+        error
+      );
 
     } finally {
 
@@ -209,6 +186,24 @@ export default function Upload() {
   return (
 
     <main className="uploadPage">
+
+      {/* ================================================= */}
+      {/* LOADING OVERLAY */}
+      {/* ================================================= */}
+
+      {loading && (
+
+        <div className="uploadLoadingOverlay">
+
+          <div className="uploadSpinner"></div>
+
+          <h2>
+            Chargement...
+          </h2>
+
+        </div>
+
+      )}
 
       <section className="uploadCard">
 
@@ -234,8 +229,8 @@ export default function Upload() {
           </h1>
 
           <p>
-            Charge un ou plusieurs
-            fichiers Yamaha au format .sty.
+            Upload des fichiers .sty
+            vers Supabase.
           </p>
 
         </div>
@@ -262,8 +257,8 @@ export default function Upload() {
           </strong>
 
           <small>
-            Tu peux charger un seul
-            fichier ou plusieurs à la fois.
+            Upload direct vers
+            le bucket Supabase.
           </small>
 
         </label>
@@ -306,7 +301,21 @@ export default function Upload() {
         )}
 
         {/* ===================================== */}
-        {/* UPLOAD BUTTON */}
+        {/* SUCCESS */}
+        {/* ===================================== */}
+
+        {success && (
+
+          <div className="uploadSuccess">
+
+            Upload terminé avec succès.
+
+          </div>
+
+        )}
+
+        {/* ===================================== */}
+        {/* BUTTON */}
         {/* ===================================== */}
 
         <button
@@ -316,61 +325,10 @@ export default function Upload() {
         >
 
           {loading
-            ? "Importation en cours..."
+            ? "Chargement..."
             : "Valider l’importation"}
 
         </button>
-
-        {/* ===================================== */}
-        {/* RESULT */}
-        {/* ===================================== */}
-
-        {result && (
-
-          <div className="uploadResult">
-
-            <h3>
-              Importation terminée
-            </h3>
-
-            <pre>
-              {JSON.stringify(
-                result,
-                null,
-                2
-              )}
-            </pre>
-
-          </div>
-
-        )}
-
-        {/* ===================================== */}
-        {/* LOGS */}
-        {/* ===================================== */}
-
-        <div className="uploadLogs">
-
-          <h3>
-            Logs
-          </h3>
-
-          <div className="logsContainer">
-
-            {logs.map((log, index) => (
-
-              <div
-                key={index}
-                className="logLine"
-              >
-                {log}
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
 
       </section>
 
