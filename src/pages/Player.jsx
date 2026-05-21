@@ -16,15 +16,18 @@ export default function Player() {
   const [selectedStyle, setSelectedStyle] =
     useState(null);
 
+  const [error, setError] =
+    useState("");
+
   // =====================================================
-  // SUPABASE
+  // BACKEND URL
   // =====================================================
 
-  const SUPABASE_URL =
-    "https://njfizvapmwhixvoyaxou.supabase.co";
-
-  const BUCKET =
-    "styles";
+  const backendUrl =
+    (
+      import.meta.env
+        .VITE_BACKEND_URL || ""
+    ).replace(/\/+$/, "");
 
   // =====================================================
   // LOAD STYLES
@@ -39,46 +42,61 @@ export default function Player() {
 
           setLoading(true);
 
+          setError("");
+
+          console.log("=================================");
+          console.log("LOADING STYLES");
+          console.log("=================================");
+
+          const playerUrl =
+            `${backendUrl}/player`;
+
+          console.log(
+            "PLAYER URL :",
+            playerUrl
+          );
+
           const response =
-            await fetch(
+            await fetch(playerUrl);
 
-              `${SUPABASE_URL}/storage/v1/object/list/${BUCKET}`,
-
-              {
-                method: "POST",
-
-                headers: {
-                  "Content-Type":
-                    "application/json"
-                },
-
-                body: JSON.stringify({
-                  limit: 1000,
-                  offset: 0
-                })
-
-              }
-
-            );
+          console.log(
+            "HTTP STATUS :",
+            response.status
+          );
 
           const data =
             await response.json();
 
           console.log(
-            "SUPABASE FILES :",
+            "BACKEND RESPONSE :",
             data
           );
 
+          if (!response.ok) {
+
+            throw new Error(
+
+              data.error ||
+
+              "FAILED TO LOAD STYLES"
+
+            );
+
+          }
+
           if (
-            Array.isArray(data)
+            data.success &&
+            Array.isArray(data.styles)
           ) {
 
-            setStyles(data);
+            setStyles(data.styles);
 
-            if (data.length > 0) {
+            if (
+              data.styles.length > 0
+            ) {
 
               setSelectedStyle(
-                data[0]
+                data.styles[0]
               );
 
             }
@@ -90,6 +108,11 @@ export default function Player() {
           console.error(
             "LOAD ERROR :",
             error
+          );
+
+          setError(
+            error.message ||
+            "Erreur chargement"
           );
 
         } finally {
@@ -105,15 +128,29 @@ export default function Player() {
   }, []);
 
   // =====================================================
-  // GET FILE URL
+  // OPEN STYLE
   // =====================================================
 
-  const getStyleUrl =
-    (fileName) => {
+  const openStyle = () => {
 
-      return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${fileName}`;
+    if (!selectedStyle) return;
 
-    };
+    console.log(
+      "OPEN STYLE :",
+      selectedStyle.publicUrl
+    );
+
+    // ===================================================
+    // FUTURE:
+    // OPEN ELECTRON / APK
+    // ===================================================
+
+    window.open(
+      selectedStyle.publicUrl,
+      "_blank"
+    );
+
+  };
 
   // =====================================================
   // JSX
@@ -140,10 +177,24 @@ export default function Player() {
           </h1>
 
           <p>
-            PSR MANAGER STYLES
+            Yamaha Style Cloud
           </p>
 
         </div>
+
+        {/* ============================================= */}
+        {/* ERROR */}
+        {/* ============================================= */}
+
+        {error && (
+
+          <div className="authError">
+
+            {error}
+
+          </div>
+
+        )}
 
         {/* ============================================= */}
         {/* LOADING */}
@@ -206,18 +257,13 @@ export default function Player() {
 
                 <h3>
 
-                  {
-                    style.name.replace(
-                      /\.sty$/i,
-                      ""
-                    )
-                  }
+                  {style.displayName}
 
                 </h3>
 
                 <span>
 
-                  PSR MANAGER STYLE
+                  Yamaha PSR Style
 
                 </span>
 
@@ -275,19 +321,14 @@ export default function Player() {
 
                 <h1 className="playerTitle">
 
-                  {
-                    selectedStyle.name.replace(
-                      /\.sty$/i,
-                      ""
-                    )
-                  }
+                  {selectedStyle.displayName}
 
                 </h1>
 
                 <p className="playerDescription">
 
                   Collection premium de styles
-                  PSR MANAGER disponibles
+                  Yamaha disponibles
                   dans votre bibliothèque cloud.
 
                 </p>
@@ -307,8 +348,7 @@ export default function Player() {
                     <strong>
 
                       {(
-                        selectedStyle
-                          .metadata?.size /
+                        selectedStyle.size /
                         1024
                       ).toFixed(1)} Ko
 
@@ -331,11 +371,11 @@ export default function Player() {
                   <div className="playerInfoCard">
 
                     <span>
-                      Type
+                      Cloud
                     </span>
 
                     <strong>
-                      PSR
+                      Supabase
                     </strong>
 
                   </div>
@@ -350,22 +390,10 @@ export default function Player() {
 
                   <button
                     className="playerPlayBtn"
-                    onClick={() => {
-
-                      const url =
-                        getStyleUrl(
-                          selectedStyle.name
-                        );
-
-                      console.log(
-                        "STYLE URL :",
-                        url
-                      );
-
-                    }}
+                    onClick={openStyle}
                   >
 
-                    ▶ Lire le style
+                    ▶ Ouvrir le style
 
                   </button>
 
@@ -373,7 +401,7 @@ export default function Player() {
                     className="playerSecondaryBtn"
                   >
 
-                    ❤ Favori
+                    ⬇ Télécharger
 
                   </button>
 
