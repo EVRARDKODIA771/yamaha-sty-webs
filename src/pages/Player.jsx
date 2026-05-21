@@ -123,73 +123,117 @@ export default function Player() {
 
     <main className="playerPage">
 
-      {/* ============================================ */}
-      {/* LEFT PANEL */}
-      {/* ============================================ */}
+      {/* ================================================= */}
+      {/* SIDEBAR */}
+      {/* ================================================= */}
 
       <aside className="playerSidebar">
+
+        {/* ============================================= */}
+        {/* HEADER */}
+        {/* ============================================= */}
+
+        <div className="playerSidebarHeader">
+
+          <h1>
+            PSR MANAGER STYLES
+          </h1>
+
+          <p>
+            PSR MANAGER STYLES
+          </p>
+
+        </div>
+
+        {/* ============================================= */}
+        {/* LOADING */}
+        {/* ============================================= */}
 
         {loading && (
 
           <div className="playerLoading">
 
-            Chargement...
+            <div className="playerLoader"></div>
+
+            <span>
+              Chargement...
+            </span>
 
           </div>
 
         )}
 
-        {!loading && styles.map((style) => (
+        {/* ============================================= */}
+        {/* STYLES */}
+        {/* ============================================= */}
 
-          <button
+        <div className="playerStylesList">
 
-            key={style.name}
+          {!loading && styles.map((style) => (
 
-            className={`playerStyleItem ${
-              selectedStyle?.name ===
-              style.name
-                ? "active"
-                : ""
-            }`}
+            <button
 
-            onClick={() =>
-              setSelectedStyle(style)
-            }
+              key={style.name}
 
-          >
+              className={`playerStyleItem ${
+                selectedStyle?.name ===
+                style.name
+                  ? "active"
+                  : ""
+              }`}
 
-            {/* ================================= */}
-            {/* IMAGE PLACEHOLDER */}
-            {/* ================================= */}
-
-            <div className="playerStyleImage">
-
-            </div>
-
-            {/* ================================= */}
-            {/* STYLE NAME */}
-            {/* ================================= */}
-
-            <span>
-
-              {
-                style.name.replace(
-                  /\.sty$/i,
-                  ""
-                )
+              onClick={() =>
+                setSelectedStyle(style)
               }
 
-            </span>
+            >
 
-          </button>
+              {/* ===================================== */}
+              {/* IMAGE */}
+              {/* ===================================== */}
 
-        ))}
+              <div className="playerStyleImage">
+
+                <div className="playerStyleGlow"></div>
+
+              </div>
+
+              {/* ===================================== */}
+              {/* INFOS */}
+              {/* ===================================== */}
+
+              <div className="playerStyleTexts">
+
+                <h3>
+
+                  {
+                    style.name.replace(
+                      /\.sty$/i,
+                      ""
+                    )
+                  }
+
+                </h3>
+
+                <span>
+
+                  PSR MANAGER STYLE
+
+                </span>
+
+              </div>
+
+            </button>
+
+          ))}
+
+        </div>
 
       </aside>
 
-      {/* ============================================ */}
-      {/* RIGHT PANEL */}
-      {/* ============================================ */}
+      {/* ================================================= */}
+      {/* VIEWER */}
+      {/* ================================================= */}
 
       <section className="playerViewer">
 
@@ -197,90 +241,147 @@ export default function Player() {
 
           <>
 
-            {/* ================================= */}
-            {/* BIG IMAGE PLACEHOLDER */}
-            {/* ================================= */}
+            {/* ========================================= */}
+            {/* HERO */}
+            {/* ========================================= */}
 
-            <div className="playerBigImage">
+            <div className="playerHero">
 
-              IMAGE DU STYLE
+              {/* ===================================== */}
+              {/* BIG IMAGE */}
+              {/* ===================================== */}
 
-            </div>
+              <div className="playerBigImage">
 
-            {/* ================================= */}
-            {/* TITLE */}
-            {/* ================================= */}
+                <div className="playerBigGlow"></div>
 
-            <h1 className="playerTitle">
-
-              {
-                selectedStyle.name.replace(
-                  /\.sty$/i,
-                  ""
-                )
-              }
-
-            </h1>
-
-            {/* ================================= */}
-            {/* INFOS */}
-            {/* ================================= */}
-
-            <div className="playerInfos">
-
-              <div>
-
-                <strong>
-                  Fichier :
-                </strong>
-
-                {" "}
-
-                {selectedStyle.name}
+                <span>
+                  STYLE IMAGE
+                </span>
 
               </div>
 
-              <div>
+              {/* ===================================== */}
+              {/* CONTENT */}
+              {/* ===================================== */}
 
-                <strong>
-                  Taille :
-                </strong>
+              <div className="playerHeroContent">
 
-                {" "}
+                <div className="playerBadge">
 
-                {(
-                  selectedStyle.metadata?.size /
-                  1024
-                ).toFixed(1)} Ko
+                  PSR MANAGER STYLES
+
+                </div>
+
+                <h1 className="playerTitle">
+
+                  {
+                    selectedStyle.name.replace(
+                      /\.sty$/i,
+                      ""
+                    )
+                  }
+
+                </h1>
+
+                <p className="playerDescription">
+
+                  Collection premium de styles
+                  PSR MANAGER disponibles
+                  dans votre bibliothèque cloud.
+
+                </p>
+
+                {/* ================================= */}
+                {/* INFOS */}
+                {/* ================================= */}
+
+                <div className="playerInfos">
+
+                  <div className="playerInfoCard">
+
+                    <span>
+                      Taille
+                    </span>
+
+                    <strong>
+
+                      {(
+                        selectedStyle
+                          .metadata?.size /
+                        1024
+                      ).toFixed(1)} Ko
+
+                    </strong>
+
+                  </div>
+
+                  <div className="playerInfoCard">
+
+                    <span>
+                      Format
+                    </span>
+
+                    <strong>
+                      STY
+                    </strong>
+
+                  </div>
+
+                  <div className="playerInfoCard">
+
+                    <span>
+                      Type
+                    </span>
+
+                    <strong>
+                      PSR
+                    </strong>
+
+                  </div>
+
+                </div>
+
+                {/* ================================= */}
+                {/* BUTTONS */}
+                {/* ================================= */}
+
+                <div className="playerActions">
+
+                  <button
+                    className="playerPlayBtn"
+                    onClick={() => {
+
+                      const url =
+                        getStyleUrl(
+                          selectedStyle.name
+                        );
+
+                      console.log(
+                        "STYLE URL :",
+                        url
+                      );
+
+                    }}
+                  >
+
+                    ▶ Lire le style
+
+                  </button>
+
+                  <button
+                    className="playerSecondaryBtn"
+                  >
+
+                    ❤ Favori
+
+                  </button>
+
+                </div>
 
               </div>
 
             </div>
-
-            {/* ================================= */}
-            {/* PLAY BUTTON */}
-            {/* ================================= */}
-
-            <button
-              className="playerPlayBtn"
-              onClick={() => {
-
-                const url =
-                  getStyleUrl(
-                    selectedStyle.name
-                  );
-
-                console.log(
-                  "STYLE URL :",
-                  url
-                );
-
-              }}
-            >
-
-              Lire le style
-
-            </button>
 
           </>
 
