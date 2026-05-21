@@ -1,4 +1,3 @@
-```jsx id="y6f2pm"
 import { useState } from "react";
 import "../App.css";
 
@@ -110,14 +109,16 @@ export default function Upload() {
       console.log("STARTING UPLOAD");
       console.log("=================================");
 
-      console.log(
-        "BACKEND URL :",
-        backendUrl
-      );
+      // ===============================================
+      // URL
+      // ===============================================
+
+      const uploadUrl =
+        `${backendUrl}/upload`;
 
       console.log(
         "UPLOAD URL :",
-        `${backendUrl}/upload`
+        uploadUrl
       );
 
       // ===============================================
@@ -147,14 +148,11 @@ export default function Upload() {
 
       const response =
         await fetch(
-
-          `${backendUrl}/upload`,
-
+          uploadUrl,
           {
             method: "POST",
             body: formData
           }
-
         );
 
       console.log(
@@ -392,4 +390,3 @@ export default function Upload() {
   );
 
 }
-```
