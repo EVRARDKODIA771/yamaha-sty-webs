@@ -1,3 +1,4 @@
+```jsx id="y6f2pm"
 import { useState } from "react";
 import "../App.css";
 
@@ -7,7 +8,8 @@ export default function Upload() {
   // STATES
   // =====================================================
 
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] =
+    useState([]);
 
   const [loading, setLoading] =
     useState(false);
@@ -15,13 +17,17 @@ export default function Upload() {
   const [success, setSuccess] =
     useState(false);
 
+  const [error, setError] =
+    useState("");
+
   // =====================================================
-  // BACK URL
+  // BACKEND URL
   // =====================================================
 
   const backendUrl =
     (
-      import.meta.env.VITE_BACKEND_URL || ""
+      import.meta.env
+        .VITE_BACKEND_URL || ""
     ).replace(/\/+$/, "");
 
   // =====================================================
@@ -31,9 +37,15 @@ export default function Upload() {
   const handleFiles = (event) => {
 
     const selectedFiles =
-      Array.from(event.target.files || []);
+      Array.from(
+        event.target.files || []
+      );
 
     setFiles(selectedFiles);
+
+    setSuccess(false);
+
+    setError("");
 
     console.log(
       "FILES SELECTED :",
@@ -48,10 +60,16 @@ export default function Upload() {
 
   const goHome = () => {
 
-    window.history.pushState({}, "", "/");
+    window.history.pushState(
+      {},
+      "",
+      "/"
+    );
 
     window.dispatchEvent(
-      new PopStateEvent("popstate")
+      new PopStateEvent(
+        "popstate"
+      )
     );
 
   };
@@ -64,10 +82,18 @@ export default function Upload() {
 
     try {
 
+      // ===============================================
+      // VALIDATION
+      // ===============================================
+
       if (files.length === 0) {
 
         console.error(
           "NO FILE SELECTED"
+        );
+
+        setError(
+          "Aucun fichier sélectionné"
         );
 
         return;
@@ -77,6 +103,8 @@ export default function Upload() {
       setLoading(true);
 
       setSuccess(false);
+
+      setError("");
 
       console.log("=================================");
       console.log("STARTING UPLOAD");
@@ -92,9 +120,9 @@ export default function Upload() {
         `${backendUrl}/upload`
       );
 
-      // =====================================================
+      // ===============================================
       // FORM DATA
-      // =====================================================
+      // ===============================================
 
       const formData =
         new FormData();
@@ -113,20 +141,21 @@ export default function Upload() {
 
       });
 
-      // =====================================================
+      // ===============================================
       // FETCH
-      // =====================================================
+      // ===============================================
 
-      const response = await fetch(
+      const response =
+        await fetch(
 
-        `${backendUrl}/upload`,
+          `${backendUrl}/upload`,
 
-        {
-          method: "POST",
-          body: formData
-        }
+          {
+            method: "POST",
+            body: formData
+          }
 
-      );
+        );
 
       console.log(
         "HTTP STATUS :",
@@ -141,22 +170,25 @@ export default function Upload() {
         data
       );
 
-      // =====================================================
+      // ===============================================
       // ERROR
-      // =====================================================
+      // ===============================================
 
       if (!response.ok) {
 
         throw new Error(
+
           data.error ||
+
           "UPLOAD FAILED"
+
         );
 
       }
 
-      // =====================================================
+      // ===============================================
       // SUCCESS
-      // =====================================================
+      // ===============================================
 
       console.log(
         "UPLOAD SUCCESS"
@@ -164,11 +196,18 @@ export default function Upload() {
 
       setSuccess(true);
 
+      setFiles([]);
+
     } catch (error) {
 
       console.error(
         "UPLOAD ERROR :",
         error
+      );
+
+      setError(
+        error.message ||
+        "Erreur upload"
       );
 
     } finally {
@@ -229,11 +268,40 @@ export default function Upload() {
           </h1>
 
           <p>
-            Upload des fichiers .sty
+            Upload direct
             vers Supabase.
           </p>
 
         </div>
+
+        {/* ===================================== */}
+        {/* ERROR */}
+        {/* ===================================== */}
+
+        {error && (
+
+          <div className="authError">
+
+            {error}
+
+          </div>
+
+        )}
+
+        {/* ===================================== */}
+        {/* SUCCESS */}
+        {/* ===================================== */}
+
+        {success && (
+
+          <div className="uploadSuccess">
+
+            Upload terminé
+            avec succès.
+
+          </div>
+
+        )}
 
         {/* ===================================== */}
         {/* DROPZONE */}
@@ -253,12 +321,13 @@ export default function Upload() {
           </span>
 
           <strong>
-            Choisir des fichiers .sty
+            Choisir des fichiers
+            .sty
           </strong>
 
           <small>
-            Upload direct vers
-            le bucket Supabase.
+            Upload dans
+            le bucket styles.
           </small>
 
         </label>
@@ -301,20 +370,6 @@ export default function Upload() {
         )}
 
         {/* ===================================== */}
-        {/* SUCCESS */}
-        {/* ===================================== */}
-
-        {success && (
-
-          <div className="uploadSuccess">
-
-            Upload terminé avec succès.
-
-          </div>
-
-        )}
-
-        {/* ===================================== */}
         {/* BUTTON */}
         {/* ===================================== */}
 
@@ -337,3 +392,4 @@ export default function Upload() {
   );
 
 }
+```
