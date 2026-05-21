@@ -1,196 +1,301 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
 
-const leftStyles = [
-  "Afro Gospel",
-  "Bikutsi Beat",
-  "Congolese Rumba",
-  "Highlife Pop",
-  "Makossa Live"
-];
+export default function Library() {
 
-const rightStyles = [
-  "Ndombolo",
-  "Reggae Praise",
-  "Slow Rock",
-  "Worship Ballad",
-  "Zouk Love"
-];
+  // =====================================================
+  // STATES
+  // =====================================================
 
-export default function Player() {
-  const [selectedStyle, setSelectedStyle] = useState("Makossa Live");
-  const [activeButton, setActiveButton] = useState("MAIN A");
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [styles, setStyles] =
+    useState([]);
 
-  const goHome = () => {
-    window.history.pushState({}, "", "/");
-    window.dispatchEvent(new PopStateEvent("popstate"));
-  };
+  const [loading, setLoading] =
+    useState(true);
 
-  const pressButton = (buttonName) => {
-    setActiveButton(buttonName);
-  };
+  const [selectedStyle, setSelectedStyle] =
+    useState(null);
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-    setActiveButton(isPlaying ? "PAUSE" : "PLAY");
-  };
+  // =====================================================
+  // SUPABASE
+  // =====================================================
+
+  const SUPABASE_URL =
+    "https://njfizvapmwhixvoyaxou.supabase.co";
+
+  const BUCKET =
+    "styles";
+
+  // =====================================================
+  // LOAD STYLES
+  // =====================================================
+
+  useEffect(() => {
+
+    const loadStyles =
+      async () => {
+
+        try {
+
+          setLoading(true);
+
+          const response =
+            await fetch(
+
+              `${SUPABASE_URL}/storage/v1/object/list/${BUCKET}`,
+
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify({
+                  limit: 1000,
+                  offset: 0
+                })
+
+              }
+
+            );
+
+          const data =
+            await response.json();
+
+          console.log(
+            "SUPABASE FILES :",
+            data
+          );
+
+          if (
+            Array.isArray(data)
+          ) {
+
+            setStyles(data);
+
+            if (data.length > 0) {
+
+              setSelectedStyle(
+                data[0]
+              );
+
+            }
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "LOAD ERROR :",
+            error
+          );
+
+        } finally {
+
+          setLoading(false);
+
+        }
+
+      };
+
+    loadStyles();
+
+  }, []);
+
+  // =====================================================
+  // GET FILE URL
+  // =====================================================
+
+  const getStyleUrl =
+    (fileName) => {
+
+      return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${fileName}`;
+
+    };
+
+  // =====================================================
+  // JSX
+  // =====================================================
 
   return (
-    <main className="playerPage">
-      <section className="yamahaPanel">
-        <button className="playerBack" onClick={goHome}>
-          ← Retour
-        </button>
 
-        <div className="panelTop">
-          <div className="brand">YAMAHA STY WEB</div>
-          <div className="panelHint">STYLE PLAYER CONTROL SECTION</div>
+    <main className="libraryPage">
+
+      {/* ============================================ */}
+      {/* LEFT PANEL */}
+      {/* ============================================ */}
+
+      <aside className="librarySidebar">
+
+        <div className="libraryTitle">
+
+          Yamaha Styles
+
         </div>
 
-        <section className="hardwareScreenFrame">
-          <div className="glassReflection" />
+        {loading && (
 
-          <div className="styleScreen">
-            <div className="screenTitle">
-              <span>♪ STYLE PLAYER</span>
-              <strong>{selectedStyle}</strong>
+          <div className="libraryLoading">
+
+            Chargement...
+
+          </div>
+
+        )}
+
+        {!loading && styles.map((style) => (
+
+          <button
+
+            key={style.name}
+
+            className={`styleItem ${
+              selectedStyle?.name ===
+              style.name
+                ? "active"
+                : ""
+            }`}
+
+            onClick={() =>
+              setSelectedStyle(style)
+            }
+
+          >
+
+            {/* ================================= */}
+            {/* IMAGE PLACEHOLDER */}
+            {/* ================================= */}
+
+            <div className="styleImagePlaceholder">
+
             </div>
 
-            <div className="screenBody screenBodyTwoCols">
-              <div className="styleColumn">
-                {leftStyles.map((style) => (
-                  <button
-                    key={style}
-                    className={
-                      selectedStyle === style
-                        ? "screenStyle active"
-                        : "screenStyle"
-                    }
-                    onClick={() => setSelectedStyle(style)}
-                  >
-                    {style}
-                  </button>
-                ))}
-              </div>
+            {/* ================================= */}
+            {/* STYLE NAME */}
+            {/* ================================= */}
 
-              <div className="styleColumn">
-                {rightStyles.map((style) => (
-                  <button
-                    key={style}
-                    className={
-                      selectedStyle === style
-                        ? "screenStyle active"
-                        : "screenStyle"
-                    }
-                    onClick={() => setSelectedStyle(style)}
-                  >
-                    {style}
-                  </button>
-                ))}
-              </div>
+            <span>
+
+              {
+                style.name.replace(
+                  /\.sty$/i,
+                  ""
+                )
+              }
+
+            </span>
+
+          </button>
+
+        ))}
+
+      </aside>
+
+      {/* ============================================ */}
+      {/* RIGHT PANEL */}
+      {/* ============================================ */}
+
+      <section className="libraryViewer">
+
+        {selectedStyle && (
+
+          <>
+
+            {/* ================================= */}
+            {/* BIG IMAGE PLACEHOLDER */}
+            {/* ================================= */}
+
+            <div className="viewerImagePlaceholder">
+
+              IMAGE DU STYLE
+
             </div>
-          </div>
-        </section>
 
-        <section className="styleControlPanel fullStyleControl">
-          <div className="controlCluster">
-            <span className="clusterLabel">INTRO</span>
-            {["I", "II", "III", "IV"].map((intro) => (
-              <button
-                key={intro}
-                className={
-                  activeButton === `INTRO ${intro}`
-                    ? "sectionBtn activeBlueLed"
-                    : "sectionBtn"
-                }
-                onClick={() => pressButton(`INTRO ${intro}`)}
-              >
-                {intro}
-              </button>
-            ))}
-          </div>
+            {/* ================================= */}
+            {/* TITLE */}
+            {/* ================================= */}
 
-          <div className="controlCluster mainCluster">
-            <span className="clusterLabel">MAIN VARIATION</span>
-            {["A", "B", "C", "D"].map((main) => (
-              <button
-                key={main}
-                className={
-                  activeButton === `MAIN ${main}`
-                    ? "sectionBtn wide activeBlueLed"
-                    : "sectionBtn wide"
-                }
-                onClick={() => pressButton(`MAIN ${main}`)}
-              >
-                {main}
-              </button>
-            ))}
-          </div>
+            <h1 className="viewerTitle">
 
-          <div className="controlCluster">
-            <span className="clusterLabel">FILL IN</span>
-            {["I", "II", "III", "IV"].map((fill) => (
-              <button
-                key={fill}
-                className={
-                  activeButton === `FILL ${fill}`
-                    ? "sectionBtn activeBlueLed"
-                    : "sectionBtn"
-                }
-                onClick={() => pressButton(`FILL ${fill}`)}
-              >
-                {fill}
-              </button>
-            ))}
-          </div>
-
-          <div className="controlCluster">
-            <span className="clusterLabel">BREAK</span>
-            <button
-              className={
-                activeButton === "BREAK"
-                  ? "sectionBtn activeBlueLed"
-                  : "sectionBtn"
+              {
+                selectedStyle.name.replace(
+                  /\.sty$/i,
+                  ""
+                )
               }
-              onClick={() => pressButton("BREAK")}
-            >
-              ↯
-            </button>
-          </div>
 
-          <div className="controlCluster">
-            <span className="clusterLabel">ENDING</span>
-            {["I", "II", "III", "IV"].map((ending) => (
-              <button
-                key={ending}
-                className={
-                  activeButton === `ENDING ${ending}`
-                    ? "sectionBtn activeBlueLed"
-                    : "sectionBtn"
-                }
-                onClick={() => pressButton(`ENDING ${ending}`)}
-              >
-                {ending}
-              </button>
-            ))}
-          </div>
+            </h1>
 
-          <div className="controlCluster playPauseCluster">
-            <span className="clusterLabel">PLAY / PAUSE</span>
+            {/* ================================= */}
+            {/* FILE INFOS */}
+            {/* ================================= */}
+
+            <div className="viewerInfos">
+
+              <div>
+
+                <strong>
+                  Fichier :
+                </strong>
+
+                {" "}
+
+                {selectedStyle.name}
+
+              </div>
+
+              <div>
+
+                <strong>
+                  Taille :
+                </strong>
+
+                {" "}
+
+                {(
+                  selectedStyle.metadata?.size /
+                  1024
+                ).toFixed(1)} Ko
+
+              </div>
+
+            </div>
+
+            {/* ================================= */}
+            {/* PLAY BUTTON */}
+            {/* ================================= */}
+
             <button
-              className={
-                isPlaying
-                  ? "sectionBtn playPauseBtn activeBlueLed"
-                  : "sectionBtn playPauseBtn"
-              }
-              onClick={togglePlayPause}
+              className="playStyleBtn"
+              onClick={() => {
+
+                const url =
+                  getStyleUrl(
+                    selectedStyle.name
+                  );
+
+                console.log(
+                  "STYLE URL :",
+                  url
+                );
+
+              }}
             >
-              {isPlaying ? "❚❚" : "▶"}
+
+              Lire le style
+
             </button>
-          </div>
-        </section>
+
+          </>
+
+        )}
+
       </section>
+
     </main>
+
   );
+
 }
