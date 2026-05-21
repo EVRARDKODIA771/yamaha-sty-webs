@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../App.css";
+import "./Player.css";
 
 export default function Player() {
 
@@ -140,11 +140,6 @@ export default function Player() {
       selectedStyle.publicUrl
     );
 
-    // ===================================================
-    // FUTURE:
-    // OPEN ELECTRON / APK
-    // ===================================================
-
     window.open(
       selectedStyle.publicUrl,
       "_blank"
@@ -173,7 +168,7 @@ export default function Player() {
         <div className="playerSidebarHeader">
 
           <h1>
-            PSR MANAGER STYLES
+            PSR MANAGER
           </h1>
 
           <p>
@@ -240,17 +235,28 @@ export default function Player() {
             >
 
               {/* ===================================== */}
-              {/* IMAGE */}
+              {/* STYLE IMAGE */}
               {/* ===================================== */}
 
               <div className="playerStyleImage">
+
+                {/* FUTURE IMAGE */}
+
+                {style.image && (
+
+                  <img
+                    src={style.image}
+                    alt={style.displayName}
+                  />
+
+                )}
 
                 <div className="playerStyleGlow"></div>
 
               </div>
 
               {/* ===================================== */}
-              {/* INFOS */}
+              {/* TEXTS */}
               {/* ===================================== */}
 
               <div className="playerStyleTexts">
@@ -285,133 +291,141 @@ export default function Player() {
 
         {selectedStyle && (
 
-          <>
+          <div className="playerHero">
 
             {/* ========================================= */}
-            {/* HERO */}
+            {/* BIG IMAGE */}
             {/* ========================================= */}
 
-            <div className="playerHero">
+            <div className="playerBigImage">
 
-              {/* ===================================== */}
-              {/* BIG IMAGE */}
-              {/* ===================================== */}
+              {/* FUTURE BIG IMAGE */}
 
-              <div className="playerBigImage">
+              {selectedStyle.image && (
 
-                <div className="playerBigGlow"></div>
+                <img
+                  src={selectedStyle.image}
+                  alt={selectedStyle.displayName}
+                />
+
+              )}
+
+              <div className="playerBigGlow"></div>
+
+              {!selectedStyle.image && (
 
                 <span>
+
                   STYLE IMAGE
+
                 </span>
+
+              )}
+
+            </div>
+
+            {/* ========================================= */}
+            {/* CONTENT */}
+            {/* ========================================= */}
+
+            <div className="playerHeroContent">
+
+              <div className="playerBadge">
+
+                YAMAHA STYLE
+
+              </div>
+
+              <h1 className="playerTitle">
+
+                {selectedStyle.displayName}
+
+              </h1>
+
+              <p className="playerDescription">
+
+                Collection premium de styles
+                Yamaha compatibles PSR.
+
+              </p>
+
+              {/* ===================================== */}
+              {/* INFOS */}
+              {/* ===================================== */}
+
+              <div className="playerInfos">
+
+                <div className="playerInfoCard">
+
+                  <span>
+                    Taille
+                  </span>
+
+                  <strong>
+
+                    {(
+                      selectedStyle.size /
+                      1024
+                    ).toFixed(1)} Ko
+
+                  </strong>
+
+                </div>
+
+                <div className="playerInfoCard">
+
+                  <span>
+                    Format
+                  </span>
+
+                  <strong>
+                    STY
+                  </strong>
+
+                </div>
+
+                <div className="playerInfoCard">
+
+                  <span>
+                    Cloud
+                  </span>
+
+                  <strong>
+                    Supabase
+                  </strong>
+
+                </div>
 
               </div>
 
               {/* ===================================== */}
-              {/* CONTENT */}
+              {/* ACTIONS */}
               {/* ===================================== */}
 
-              <div className="playerHeroContent">
+              <div className="playerActions">
 
-                <div className="playerBadge">
+                <button
+                  className="playerPlayBtn"
+                  onClick={openStyle}
+                >
 
-                  PSR MANAGER STYLES
+                  ▶ Ouvrir le style
 
-                </div>
+                </button>
 
-                <h1 className="playerTitle">
+                <button
+                  className="playerSecondaryBtn"
+                >
 
-                  {selectedStyle.displayName}
+                  ⬇ Télécharger
 
-                </h1>
-
-                <p className="playerDescription">
-
-                  Collection premium de styles
-                  Yamaha disponibles
-                  dans votre bibliothèque cloud.
-
-                </p>
-
-                {/* ================================= */}
-                {/* INFOS */}
-                {/* ================================= */}
-
-                <div className="playerInfos">
-
-                  <div className="playerInfoCard">
-
-                    <span>
-                      Taille
-                    </span>
-
-                    <strong>
-
-                      {(
-                        selectedStyle.size /
-                        1024
-                      ).toFixed(1)} Ko
-
-                    </strong>
-
-                  </div>
-
-                  <div className="playerInfoCard">
-
-                    <span>
-                      Format
-                    </span>
-
-                    <strong>
-                      STY
-                    </strong>
-
-                  </div>
-
-                  <div className="playerInfoCard">
-
-                    <span>
-                      Cloud
-                    </span>
-
-                    <strong>
-                      Supabase
-                    </strong>
-
-                  </div>
-
-                </div>
-
-                {/* ================================= */}
-                {/* BUTTONS */}
-                {/* ================================= */}
-
-                <div className="playerActions">
-
-                  <button
-                    className="playerPlayBtn"
-                    onClick={openStyle}
-                  >
-
-                    ▶ Ouvrir le style
-
-                  </button>
-
-                  <button
-                    className="playerSecondaryBtn"
-                  >
-
-                    ⬇ Télécharger
-
-                  </button>
-
-                </div>
+                </button>
 
               </div>
 
             </div>
 
-          </>
+          </div>
 
         )}
 
