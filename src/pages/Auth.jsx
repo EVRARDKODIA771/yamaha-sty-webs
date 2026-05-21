@@ -1,23 +1,50 @@
 import { useState } from "react";
+
 import "./Auth.css";
 
-const API_URL =
-  "https://yamaha-style-backend.vercel.app";
+// ======================================================
+// BACKEND URL
+// ======================================================
+
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL;
+
+console.log(
+  "BACKEND URL :",
+  BACKEND_URL
+);
 
 export default function Auth() {
 
-  const [isLogin, setIsLogin] = useState(true);
+  // ======================================================
+  // MODE
+  // ======================================================
 
-  const [username, setUsername] = useState("");
+  const [isLogin, setIsLogin] =
+    useState(true);
 
-  const [email, setEmail] = useState("");
+  // ======================================================
+  // FORM
+  // ======================================================
 
-  const [password, setPassword] = useState("");
+  const [username, setUsername] =
+    useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] =
+    useState("");
 
-  const [error, setError] = useState("");
+  const [password, setPassword] =
+    useState("");
 
+  // ======================================================
+  // UI
+  // ======================================================
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
 
   // ======================================================
   // SUBMIT
@@ -37,9 +64,9 @@ export default function Auth() {
 
       if (!email || !password) {
 
-        setError("Veuillez remplir tous les champs");
-
-        setLoading(false);
+        setError(
+          "Veuillez remplir tous les champs"
+        );
 
         return;
 
@@ -47,9 +74,9 @@ export default function Auth() {
 
       if (!isLogin && !username) {
 
-        setError("Username requis");
-
-        setLoading(false);
+        setError(
+          "Username requis"
+        );
 
         return;
 
@@ -79,67 +106,121 @@ export default function Auth() {
           };
 
       // ==================================================
+      // DEBUG
+      // ==================================================
+
+      console.log(
+        "ENDPOINT :",
+        endpoint
+      );
+
+      console.log(
+        "BODY :",
+        body
+      );
+
+      console.log(
+        "FULL URL :",
+        `${BACKEND_URL}/auth/${endpoint}`
+      );
+
+      // ==================================================
       // REQUEST
       // ==================================================
 
       const response = await fetch(
-        `${API_URL}/auth/${endpoint}`,
+        `${BACKEND_URL}/auth/${endpoint}`,
         {
           method: "POST",
 
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
 
           body: JSON.stringify(body),
         }
       );
 
+      // ==================================================
+      // DEBUG RESPONSE
+      // ==================================================
+
+      console.log(
+        "RESPONSE STATUS :",
+        response.status
+      );
+
+      // ==================================================
+      // PARSE JSON
+      // ==================================================
+
       const data = await response.json();
+
+      console.log(
+        "BACKEND RESPONSE :",
+        data
+      );
 
       // ==================================================
       // SUCCESS
       // ==================================================
 
-      if (data.success && data.token) {
+      if (
+        data.success &&
+        data.token
+      ) {
 
-        // ==================================================
+        // ==============================================
         // STORE TOKEN
-        // ==================================================
+        // ==============================================
 
         localStorage.setItem(
           "token",
           data.token
         );
 
-        // ==================================================
+        // ==============================================
         // STORE USER
-        // ==================================================
+        // ==============================================
 
         localStorage.setItem(
           "user",
           JSON.stringify(data.user)
         );
 
-        // ==================================================
+        console.log(
+          "AUTH SUCCESS"
+        );
+
+        // ==============================================
         // RELOAD
-        // ==================================================
+        // ==============================================
 
         window.location.reload();
 
       } else {
 
         setError(
-          data.error || "Erreur authentification"
+
+          data.error ||
+
+          "Erreur authentification"
+
         );
 
       }
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        "AUTH ERROR :",
+        error
+      );
 
-      setError("Erreur serveur");
+      setError(
+        "Erreur serveur"
+      );
 
     } finally {
 
@@ -148,7 +229,6 @@ export default function Auth() {
     }
 
   };
-
 
   // ======================================================
   // UI
@@ -162,9 +242,17 @@ export default function Auth() {
 
       <div className="authCard">
 
+        {/* ========================================= */}
+        {/* LOGO */}
+        {/* ========================================= */}
+
         <div className="authLogo">
           Y
         </div>
+
+        {/* ========================================= */}
+        {/* TITLE */}
+        {/* ========================================= */}
 
         <h1 className="authTitle">
           Yamaha STY
@@ -174,17 +262,17 @@ export default function Auth() {
           Style Analyzer Platform
         </p>
 
-
         {/* ========================================= */}
         {/* ERROR */}
         {/* ========================================= */}
 
         {error && (
+
           <div className="authError">
             {error}
           </div>
-        )}
 
+        )}
 
         {/* ========================================= */}
         {/* USERNAME */}
@@ -198,12 +286,13 @@ export default function Auth() {
             className="authInput"
             value={username}
             onChange={(e) =>
-              setUsername(e.target.value)
+              setUsername(
+                e.target.value
+              )
             }
           />
 
         )}
-
 
         {/* ========================================= */}
         {/* EMAIL */}
@@ -215,10 +304,11 @@ export default function Auth() {
           className="authInput"
           value={email}
           onChange={(e) =>
-            setEmail(e.target.value)
+            setEmail(
+              e.target.value
+            )
           }
         />
-
 
         {/* ========================================= */}
         {/* PASSWORD */}
@@ -230,10 +320,11 @@ export default function Auth() {
           className="authInput"
           value={password}
           onChange={(e) =>
-            setPassword(e.target.value)
+            setPassword(
+              e.target.value
+            )
           }
         />
-
 
         {/* ========================================= */}
         {/* BUTTON */}
@@ -253,7 +344,6 @@ export default function Auth() {
 
         </button>
 
-
         {/* ========================================= */}
         {/* SWITCH */}
         {/* ========================================= */}
@@ -261,13 +351,17 @@ export default function Auth() {
         <div className="authSwitch">
 
           <button
+
             onClick={() => {
 
-              setIsLogin(!isLogin);
+              setIsLogin(
+                !isLogin
+              );
 
               setError("");
 
             }}
+
           >
 
             {isLogin
